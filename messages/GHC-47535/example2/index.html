@@ -1,0 +1,48 @@
+<p>The identifier <code>foo</code> is used as a record selector, but it refers to a function of the <code>Foo</code> class instead.
+Using <code>bar</code> fixes the error, since it is a selector of the <code>Bar</code> record.
+This error can only occur when the type of the record is ambiguous, in the example below this is achieved by the use of <code>undefined</code>.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>NotARecordSelector.hs:9:20: error: [GHC-47535]
+    • ‘foo’ is not a record selector
+    • In the expression: undefined {foo = ()}
+      In an equation for ‘test’: test = undefined {foo = ()}
+  |
+9 | test = undefined { foo = () }
+  |                    ^^^</code></pre>
+
+<pre class="filename">NotARecordSelector.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module NotARecordSelector where
+
+class Foo a where
+  foo :: a -> ()
+
+data Bar = Bar { bar :: () }
+
+test :: Bar
+test = undefined { foo = () }
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module NotARecordSelector where
+
+class Foo a where
+  foo :: a -> ()
+
+data Bar = Bar { bar :: () }
+
+test :: Bar
+test = undefined { bar = () }
+</code></pre>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,39 @@
+<p>There is no space before the type application <code>@Int</code>.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>MissingSpaceTypeOperator.hs:6:7: error:
+    @-pattern in expression context: x@Int
+    Type application syntax requires a space before '@'
+  |
+6 | f x = x@Int
+  |       ^^^^^</code></pre>
+
+<pre class="filename">MissingSpaceTypeApplication.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE TypeApplications #-}
+
+ module MissingSpaceTypeApplication where
+
+ f :: (forall a. a -> b) -> (Int -> b)
+ f x = x@Int
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE TypeApplications #-}
+
+ module MissingSpaceTypeApplication where
+
+ f :: (forall a. a -> b) -> (Int -> b)
+ f x = x @Int
+</code></pre>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,43 @@
+<p>The <code>@Bool</code> is too much in this example. There is nothing to bind to it, so it is not allowed to be there.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>TyArgs.hs:6:4: error: [GHC-01629]
+    • Too many type arguments in constructor pattern for ‘Just’
+      Expected no more than 1; got 2
+    • In the pattern: Just @Int @Bool x
+      In an equation for ‘f’: f (Just @Int @Bool x) = x
+  |
+6 | f (Just @Int @Bool x) = x
+  |    ^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">TyArgs.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
+module TyArgs where
+
+f :: Maybe Int -> Int
+f (Just @Int @Bool x) = x
+f Nothing = 10
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
+module TyArgs where
+
+f :: Maybe Int -> Int
+f (Just @Int x) = x
+f Nothing = 10
+</code></pre>
+    </div>
+  </div>
+</div>
+

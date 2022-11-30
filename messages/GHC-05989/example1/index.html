@@ -1,0 +1,72 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main.hs:5:1: error: [GHC-05989]
+    • Not a function kind: *
+      but extra binders found: y
+    • In the data type declaration for ‘A’
+  |
+5 | data A x y
+  | ^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>This example declares <code>A</code> to have kind <code>* -&gt; *</code>, meaning it is a type
+constructor that takes one argument. However, the <code>data</code> declaration for <code>A</code> has
+two arguments (<code>x</code> and <code>y</code>), so it does not match the kind signature.</p>
+<p>This can be fixed by either updating the <code>data</code> declaration to match the kind
+signature (by removing the argument <code>y</code>) or updating the kind signature to match
+the <code>data</code> declaration (by adding an argument of kind <code>*</code>).</p>
+
+<pre class="filename">Main1.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Main1 where
+
+type A :: * -> *
+
+data A x y
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Main1 where
+
+type A :: * -> *
+
+data A x = A x
+</code></pre>
+    </div>
+  </div>
+</div>
+
+<pre class="filename">Main2.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Main2 where
+
+type A :: * -> *
+
+data A x y
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Main2 where
+
+type A :: * -> * -> *
+
+data A x y = A x y
+</code></pre>
+    </div>
+  </div>
+</div>
+

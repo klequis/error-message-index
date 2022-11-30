@@ -1,0 +1,34 @@
+<h2 id="message">Message</h2>
+<pre><code>ViewPatternExpr.hs:3:6: error: [GHC-66228]
+    View pattern in expression context: sqrt -&gt; y
+  |
+3 | h = (sqrt -&gt; y)
+  |      ^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>In this context, the view pattern is being used instead of a function.
+The issue can be corrected by not using a view pattern.</p>
+
+<pre class="filename">ViewPatternExpr.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module ViewPatternExpr where
+
+h = (sqrt -> y)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module ViewPatternExpr where
+
+h = sqrt
+</code></pre>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,35 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>    Cannot parse LANGUAGE pragma
+    Expecting comma-separated list of language options,
+    each starting with a capital letter
+      E.g. {-# LANGUAGE TemplateHaskell, GADTs #-}
+</code></pre>
+
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE GADTs TemplateHaskell #-}
+
+module Main where
+
+main = print "Please look at the LANGUAGE pragmas!"
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE GADTs, TemplateHaskell #-}
+
+module Main where
+
+main = print "Please look at the LANGUAGE pragmas!"
+</code></pre>
+    </div>
+  </div>
+</div>
+

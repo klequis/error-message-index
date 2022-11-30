@@ -1,0 +1,34 @@
+<h2 id="error-message">Error message</h2>
+<pre><code>Main.hs:5:12: error: [GHC-62016]
+    • Cannot derive well-kinded instance of form ‘Functor (AppliedToInt ...)’
+        Class ‘Functor’ expects an argument of kind ‘* -&gt; *’
+    • In the data declaration for ‘AppliedToInt’</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The <code>Functor</code> type class applies to type constructors of
+exactly the kind <code>Type -&gt; Type</code>. However, the kind of <code>AppliedToInt</code>
+is <code>(Type -&gt; Type) -&gt; Type</code> instead. There is thus a mismatch
+between the expected and given kinds.</p>
+
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# language DeriveFunctor #-}
+module Main where
+
+data AppliedToInt f = AppliedToInt (f Int) 
+  deriving Functor
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell"><not present></code></pre>
+    </div>
+  </div>
+</div>
+

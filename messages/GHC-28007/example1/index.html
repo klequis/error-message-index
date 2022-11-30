@@ -1,0 +1,59 @@
+<p>LANGUAGE pragmas need to come before the <code>module</code> keyword.
+In the example below, the <code>RecursiveDo</code> pragma is placed after the module keyword. Therefore, there’s an additional error on line 10 suggesting that the <code>RecursiveDo</code> extension should be enabled. This is because language pragmas placed below the module header are ignored.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main.hs:5:1: warning: [-Wmisplaced-pragmas] [GHC-28007]
+    Misplaced LANGUAGE pragma
+    Suggested fix:
+      Perhaps you meant to place it in the module header?
+      The module header is the section at the top of the file, before the ‘module’ keyword
+  |
+5 | {-# LANGUAGE RecursiveDo #-}
+  | ^^^^^^^^^^^^
+[1 of 2] Compiling Main             ( Main.hs, Main.o )
+
+Main.hs:10:9: error: [GHC-88464]
+    Variable not in scope: mdo :: a -&gt; a
+    Suggested fixes:
+      • Perhaps use ‘mod’ (imported from Prelude)
+      • Perhaps you intended to use RecursiveDo
+   |
+10 | foo x = mdo x
+</code></pre>
+
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ScopedTypeVariables #-}
+
+module Main where
+
+{-# LANGUAGE RecursiveDo #-}
+
+main = pure ()
+
+foo :: forall a. a -> a
+foo x = mdo x
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE RecursiveDo #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+
+module Main where
+
+main = pure ()
+
+foo :: forall a. a -> a
+foo x = mdo x
+</code></pre>
+    </div>
+  </div>
+</div>
+

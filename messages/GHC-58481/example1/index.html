@@ -1,0 +1,34 @@
+<p>Error in expression - <code>module</code> keyword should not be used in the same line as an expression declaration.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>error: [GHC-58481]
+    parse error on input ‘module’
+  |
+5 | foo = 123456                    module
+  |                                 ^^^^^^</code></pre>
+
+<pre class="filename">Example.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Example where
+
+
+foo = 123456                    module
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Example where
+
+
+foo = 123456 
+</code></pre>
+    </div>
+  </div>
+</div>
+

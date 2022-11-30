@@ -1,0 +1,34 @@
+<p>The module <code>Example</code> exports the symbol <code>answer</code> twice.
+In addition to the explicit entry in the export list it’s also exported by <code>Example(..)</code>.</p>
+<p>To avoid the warning, remove one of the duplicated mention.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main.hs:1:25: warning: [-Wduplicate-exports] [GHC-47854]
+    ‘answer’ is exported by ‘Example(..)’ and ‘answer’
+  |
+1 | module Example (answer, Example(..)) where
+  |                        ^^^^^^</code></pre>
+
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Example (answer, Example(..)) where
+
+data Example = Example { answer :: Int }
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Example (Example) where
+
+data Example = Example { answer :: Int }
+</code></pre>
+    </div>
+  </div>
+</div>
+

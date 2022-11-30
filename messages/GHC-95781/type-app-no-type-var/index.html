@@ -1,0 +1,45 @@
+<p>The function <code>plus</code> is applied to the type argument <code>Int</code>, but its annotated type <code>Int -&gt; Int -&gt; Int</code> contains no type variable.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>TypeAppNoTypeVar.hs:8:5: error: [GHC-95781]
+    • Cannot apply expression of type ‘Int -&gt; Int -&gt; Int’
+      to a visible type argument ‘Int’
+    • In the expression: plus @Int 5 7
+      In an equation for ‘x’: x = plus @Int 5 7
+  |
+8 | x = plus @Int 5 7
+  |     ^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">TypeAppNoTypeVar.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE TypeApplications #-}
+
+module TypeAppNoTypeVar where
+
+plus :: Int -> Int -> Int
+plus = (+)
+
+x = plus @Int 5 7
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE TypeApplications #-}
+
+module TypeAppNoTypeVar where
+
+plus :: Int -> Int -> Int
+plus = (+)
+
+x = plus 5 7
+</code></pre>
+    </div>
+  </div>
+</div>
+

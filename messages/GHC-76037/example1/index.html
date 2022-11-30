@@ -1,0 +1,35 @@
+<p>The data constructor <code>A</code> used in the lambda expression is not in scope.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>NotInScopeLambda.hs:3:6: error: [GHC-76037]
+    Not in scope: data constructor ‘A’
+  |
+3 | f = \A -&gt; A
+  |      ^</code></pre>
+
+<pre class="filename">NotInScopeLambda.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module NotInScopeLambda where
+
+f = \A -> A
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module NotInScopeLambda where
+
+data Foo = A | B
+
+f :: Foo -> Foo
+f = \A -> A
+</code></pre>
+    </div>
+  </div>
+</div>
+

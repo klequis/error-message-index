@@ -1,0 +1,72 @@
+<p>In this example, the implementation for <code>IsAFoo Foo</code> is in a different module than both the definition for <code>class IsAFoo</code> and the datatype <code>Foo</code>. Thus, it would be possible for a user to write <code>import Foo</code> and expect to have <code>instance IsAFoo Foo</code> in scope; however, the user would need to additionally import <code>module OrphanInstance</code>.</p>
+<p>In this case, where the definitions for both the typeclass and the type are available, the solution is to move the instance definition into the <code>Foo</code> module.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>OrphanInstance.hs:5:1: warning: [-Worphans] [GHC-90177]
+    Orphan instance: instance IsAFoo Foo
+    To avoid this
+        move the instance declaration to the module of the class or of the type, or
+        wrap the type with a newtype and declare the instance on the new type.
+  |
+5 | instance IsAFoo Foo where
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^...</code></pre>
+
+<pre class="filename">Foo.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Foo where
+
+data Foo = Foo
+
+class IsAFoo x where
+    convertToFoo :: x -> Foo
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Foo where
+
+data Foo = Foo
+
+class IsAFoo x where
+    convertToFoo :: x -> Foo
+
+instance IsAFoo Foo where
+    convertToFoo = id
+</code></pre>
+    </div>
+  </div>
+</div>
+
+<pre class="filename">OrphanInstance.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module OrphanInstance where
+
+import Foo
+
+instance IsAFoo Foo where
+    convertToFoo = id
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module OrphanInstance where
+
+import Foo
+</code></pre>
+    </div>
+  </div>
+</div>
+

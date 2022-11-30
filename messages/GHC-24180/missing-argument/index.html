@@ -1,0 +1,41 @@
+<h2 id="message">Message</h2>
+<pre><code>missing-argument/before/MissingArgument.hs:6:12: error: [GHC-24180]
+    Operator applied to too few arguments: +
+  |
+6 | example :: + Int
+  |            ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Infix type operators require arguments on both sides.</p>
+
+<pre class="filename">MissingArgument.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE TypeOperators #-}
+module MissingArgument where
+
+type a + b = Either a b
+
+example :: + Int
+example = Right 5
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE TypeOperators #-}
+module MissingArgument where
+
+type a + b = Either a b
+
+example :: String + Int
+example = Right 5
+</code></pre>
+    </div>
+  </div>
+</div>
+
